@@ -1,0 +1,50 @@
+xbrltag_recommender/
+└── app/
+    ├── main.py
+    ├── api/
+    │   ├── router.py
+    │   └── v1/
+    │       ├── system.py
+    │       ├── query.py
+    │       ├── taxonomy.py
+    │       ├── models.py
+    │       ├── feedback.py
+    │       └── training.py
+    ├── core/
+    │   ├── config.py
+    │   ├── errors.py
+    │   ├── deps.py
+    │   ├── logging.py
+    │   └── middleware.py
+    ├── db/
+    │   └── session.py
+    ├── jobs/
+    │   └── manager.py
+    ├── models/
+    │   └── entities.py
+    ├── schemas/
+    │   ├── common.py
+    │   ├── settings.py
+    │   ├── query.py
+    │   ├── taxonomy.py
+    │   ├── feedback.py
+    │   ├── embedder.py
+    │   └── reranker.py
+    └── services/
+        ├── model_registry.py
+        ├── vectorstore.py
+        ├── settings_service.py
+        ├── taxonomy_service.py
+        ├── feedback_service.py
+        ├── embedder_service.py
+        ├── reranker_service.py
+        └── training.py
+
+
+
+pip install fastapi uvicorn
+pip install sqlalchemy pydantic
+pip install pandas
+pip install langchain langchain_huggingface
+pip install sentence-transformers faiss-cpu torch tqdm
+pip install openai joblib python-dotenv
