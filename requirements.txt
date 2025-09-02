@@ -53,6 +53,8 @@ pandas==2.3.2
 pillow==11.3.0
 propcache==0.3.2
 psutil==7.0.0
+psycopg==3.2.9
+psycopg-binary==3.2.9
 pyarrow==21.0.0
 pydantic==2.11.7
 pydantic-settings==2.10.1

@@ -8,7 +8,7 @@ class Settings(BaseSettings):
     APP_ENV: str = Field(default="dev")  # "dev" or "prod"
     API_PREFIX: str = Field(default="/api/v1")
 
-    DATABASE_URL: str = Field(default="sqlite:///./app.db")
+    DATABASE_URL: str = Field(default="postgresql+psycopg://postgres.pwmcbbxbnbcwymqllrpn:xbrlforlife123@aws-1-ap-southeast-1.pooler.supabase.com:6543/postgres")
     INDEX_PATH: str = Field(default="./data/FAISS_INDEX")
     FINETUNE_DIR: str = Field(default="./checkpoints/model/finetuned")
     DEVICE: str = Field(default="cpu")  # "cpu" or "cuda"

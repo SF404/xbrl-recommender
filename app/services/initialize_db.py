@@ -11,11 +11,11 @@ from pathlib import Path
 settings = get_settings()
 DATABASE_URL = settings.DATABASE_URL
 
-# Create the database session and initialize the database if it doesn't exist
-engine = create_engine(DATABASE_URL, connect_args={"check_same_thread": False})
+engine_kwargs = {"pool_pre_ping": True}
+engine = create_engine(DATABASE_URL, **engine_kwargs)
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
-# Create and initialize the DB if necessary
+# Create and initialize the DB
 init_db()
 
 def download_and_save_model(model_id: str, save_path: str):
@@ -28,7 +28,6 @@ def download_and_save_model(model_id: str, save_path: str):
     else:
         model = SentenceTransformer(model_id)
 
-    # use the library's save to produce a loadable directory
     model.save(save_path)
     return save_path
 
@@ -36,10 +35,8 @@ def download_and_save_model_reranker(model_name: str, save_path: str):
     """Download and save the reranker (cross-encoder) model locally."""
     print(f"Downloading and saving reranker model: {model_name} to {save_path}")
     
-    # Create the directory if it doesn't exist  
     os.makedirs(save_path, exist_ok=True)
     
-    # Use CrossEncoder to load and save the model
     model = CrossEncoder(model_name)
     model.save(save_path)
     
@@ -93,8 +90,6 @@ def load_embedder_and_reranker(embedder_path_or_id: str, reranker_path_or_id: st
     if "cross-encoder" in reranker_path_or_id or reranker_path_or_id.startswith("cross-encoder/"):
         reranker = CrossEncoder(reranker_path_or_id)
     else:
-        # if user actually saved a seq-class model, try loading with CrossEncoder anyway,
-        # or fall back to SentenceTransformer only if intended.
         try:
             reranker = CrossEncoder(reranker_path_or_id)
         except Exception:
@@ -104,7 +99,7 @@ def load_embedder_and_reranker(embedder_path_or_id: str, reranker_path_or_id: st
 
 def initialize_db():
     # Create a session instance using the correct syntax
-    db = SessionLocal()  # Here we use the sessionmaker to create a session
+    db = SessionLocal()
     try:
         embedder, reranker, setting = initialize_models(db)
 
@@ -116,5 +111,5 @@ def initialize_db():
     except Exception as e:
         print(f"Error initializing database: {e}")
     finally:
-        db.close()  # Don't forget to close the session
+        db.close()
 
