@@ -11,7 +11,7 @@ COPY . .
 
 
 # Use $PORT provided by Cloud Run; default to 8080 locally
-CMD CMD ["sh", "-c", "uvicorn main:app --host 0.0.0.0 --port 8090"]
+CMD ["sh", "-c", "uvicorn main:app --host 0.0.0.0 --port 8090"]
 
 
 # FROM python:3.13-rc-slim AS base
