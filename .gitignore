@@ -3,3 +3,5 @@ venv/
 env/
 ENV/
 .Python
+checkpoints/
+__pycache__/
