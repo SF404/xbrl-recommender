@@ -13,6 +13,11 @@ class Settings(BaseSettings):
     FINETUNE_DIR: str = Field(default="./checkpoints/model/finetuned")
     DEVICE: str = Field(default="cpu")  # "cpu" or "cuda"
 
+    # GCP storage settings
+    GCS_BUCKET: str = Field(default="tag_recommender")  
+    GCS_PREFIX: str = Field(default="models")  
+    GCS_CREDENTIALS_JSON: str = Field(default="") 
+
     class Config:
         env_file = ".env"
         case_sensitive = True

@@ -42,7 +42,7 @@ class Taxonomy(Base):
     __tablename__ = "taxonomies"
     id = Column(Integer, primary_key=True, index=True)
     name = Column(String)
-    symbol = Column(String)
+    symbol = Column(String, unique=True)
     description = Column(Text)
     source_file = Column(String)
     created_at = Column(DateTime(timezone=True), server_default=func.now())

@@ -1,5 +1,7 @@
 from contextlib import asynccontextmanager
+from typing import List
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 
 from .core.config import get_settings
 from .core.logging import configure_logging
@@ -8,6 +10,13 @@ from .core.middleware import RequestContextMiddleware
 from .db.session import init_db, SessionLocal
 from .services.model_registry import ModelRegistry
 from .api.router import api_router
+
+ALLOWED_ORIGINS: List[str] = [
+    "http://localhost:3000",
+    "http://localhost:5174",
+    "http://localhost:8000",
+    "https://xbrl.briskbold.ai",
+]
 
 
 @asynccontextmanager
@@ -38,6 +47,15 @@ async def lifespan(app: FastAPI):
 def create_app() -> FastAPI:
     settings = get_settings()
     app = FastAPI(title=settings.APP_NAME, lifespan=lifespan)
+
+    # CORS middleware
+    app.add_middleware(
+        CORSMiddleware,
+        allow_origins=ALLOWED_ORIGINS,
+        allow_credentials=True,
+        allow_methods=["*"],
+        allow_headers=["*"],
+    )
 
     # Middleware & errors
     app.add_middleware(RequestContextMiddleware)
