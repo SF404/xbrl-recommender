@@ -4,3 +4,4 @@ env/
 ENV/
 .Python
 __pycache__/
+data/
